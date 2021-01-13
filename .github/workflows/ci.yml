@@ -1,0 +1,61 @@
+name: Lint & Test
+on: [push]
+
+jobs:
+  lint:
+    name: Lint 🚨
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@master
+
+      - name: Install Ruby 💎
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+
+      - name: Setup Cache 🗂
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      
+      - name: Dependencies 🏗
+        run: |
+          echo 'gem: --no-document' >> ~/.gemrc
+          gem install standardrb
+
+      - name: Lint Ruby 🚨
+        run: standardrb
+
+  test:
+    name: Test 🧪
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@master
+
+      - name: Install Ruby 💎
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+      
+      - name: Setup Cache 🗂
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      
+      - name: Dependencies 🏗
+        run: |
+          echo 'gem: --no-document' >> ~/.gemrc
+          gem install bundler
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Test 🧪
+        run: bundle exec rspec
