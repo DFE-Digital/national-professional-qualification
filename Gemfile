@@ -7,6 +7,7 @@ ruby "2.7.2"
 gem "rails", "~> 6.1.1"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
+gem 'activerecord-postgres_enum'
 # Use Puma as the app server
 gem "puma", "~> 5.0"
 # Use SCSS for stylesheets
@@ -25,7 +26,12 @@ gem "bootsnap", ">= 1.4.4", require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+  # Linter
+  gem "standard"
+  # Testing
   gem "rspec-rails"
+  gem 'factory_bot_rails'
+  gem 'database_cleaner-active_record'
 end
 
 group :development do
