@@ -7,7 +7,7 @@ ruby "2.7.2"
 gem "rails", "~> 6.1.1"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
-gem 'activerecord-postgres_enum'
+gem "activerecord-postgres_enum"
 # Use Puma as the app server
 gem "puma", "~> 5.0"
 # Use SCSS for stylesheets
@@ -30,8 +30,8 @@ group :development, :test do
   gem "standard"
   # Testing
   gem "rspec-rails"
-  gem 'factory_bot_rails'
-  gem 'database_cleaner-active_record'
+  gem "factory_bot_rails"
+  gem "database_cleaner-active_record"
 end
 
 group :development do
