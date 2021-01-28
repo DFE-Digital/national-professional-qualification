@@ -9,5 +9,9 @@
 $govuk-font-url-function: frontend-font-url;
 $govuk-image-url-function: frontend-image-url;
 
+$app-light-grey: #f8f8f8;
+$app-code-color: #d13118;
+
 @import "~govuk-frontend/govuk/all";
 @import "defaults";
+@import "navigation";

@@ -1,0 +1,7 @@
+nav.app-navigation.govuk-clearfix
+  .govuk-width-container
+    ul.app-navigation__list
+      li.app-navigation__list-item
+        = link_to t(:dashboard, scope: [:nav]), '/', class: %w[govuk-link govuk-link--no-visited-state app-navigation__link]
+      li.app-navigation__list-item.app-navigation__list-item--right
+        = link_to t(:sign_out, scope: [:nav]), '/', class: %w[govuk-link govuk-link--no-visited-state app-navigation__link]
