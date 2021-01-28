@@ -5,5 +5,5 @@
         | Alpha
       span.govuk-phase-banner__text
         | This is a new service – your
-        =<> mail_to('npq@digital.education.gov.uk', 'feedback', class: 'govuk-link')
+        =<> mail_to(Rails.configuration.x.feedback_email, 'feedback', class: 'govuk-link')
         | will help us to improve it.
