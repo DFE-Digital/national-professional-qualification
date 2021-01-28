@@ -9,7 +9,7 @@ module HTTPAuth
     return true unless Rails.env.production?
 
     authenticate_or_request_with_http_basic do |username, password|
-      username == ENV.fetch('HTTP_AUTH_USER') && password == ENV.fetch('HTTP_AUTH_PASSWORD')
+      username == ENV.fetch("HTTP_AUTH_USER") && password == ENV.fetch("HTTP_AUTH_PASSWORD")
     end
   end
 end

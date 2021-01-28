@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   def require_user!
     return if current_user
 
-    redirect_to sign_in_path, flash: { error: "You are not authenticated" }
+    redirect_to sign_in_path, flash: {error: "You are not authenticated"}
   end
 
   def go_to_dashboard_if_authenticated!

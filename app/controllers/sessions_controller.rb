@@ -1,13 +1,14 @@
 class SessionsController < ApplicationController
   before_action :go_to_dashboard_if_authenticated!, except: [:destroy]
 
-  def new; end
+  def new
+  end
 
   def create
-    if params[:role] == 'supplier'
-      @current_user ||= find_or_create_supplier_member
+    @current_user ||= if params[:role] == "supplier"
+      find_or_create_supplier_member
     else
-      @current_user ||= find_or_create_admin_staff
+      find_or_create_admin_staff
     end
     session[:user_id] = @current_user.id
     redirect_to root_path
@@ -23,10 +24,10 @@ class SessionsController < ApplicationController
   private
 
   def find_or_create_admin_staff
-    User.create_with({}).find_or_create_by(role: 'admin')
+    User.create_with({}).find_or_create_by(role: "admin")
   end
 
   def find_or_create_supplier_member
-    User.create_with({}).find_or_create_by(role: 'supplier')
+    User.create_with({}).find_or_create_by(role: "supplier")
   end
 end
