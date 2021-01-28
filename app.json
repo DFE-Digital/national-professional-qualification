@@ -1,0 +1,39 @@
+{
+  "name": "npq-alpha",
+  "scripts": {
+    "postdeploy": "bundle exec rails db:migrate"
+  },
+  "env": {
+    "LANG": {
+      "required": false
+    },
+    "RACK_ENV": {
+      "required": false
+    },
+    "RAILS_ENV": {
+      "required": false
+    },
+    "HTTP_AUTH_USER": {
+      "required": false
+    },
+    "HTTP_AUTH_PASSWORD": {
+      "required": false
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    },
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
