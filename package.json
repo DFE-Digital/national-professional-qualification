@@ -1,0 +1,14 @@
+{
+  "name": "national-professional-qualification",
+  "private": true,
+  "dependencies": {
+    "@rails/ujs": "^6.0.0",
+    "@rails/webpacker": "5.2.1",
+    "govuk-frontend": "^3.10.2"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+    "cypress": "^6.3.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}

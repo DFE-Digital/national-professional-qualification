@@ -82,3 +82,101 @@ jobs:
           PGHOST: localhost
           PGUSER: postgres
           PGPASSWORD: postgres
+
+  chrome:
+    name: Chrome End-to-End Test 🧪↔️🧪
+    runs-on: ubuntu-20.04
+    services:
+      postgres:
+        image: postgres:13
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@master
+
+      - name: Install Ruby 💎
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+
+      - name: Install Node ✳️
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      
+      - name: Setup Ruby Cache 🗂
+        uses: actions/cache@v2
+        id: ruby-cache
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      
+      - name: Get yarn cache directory path 👀
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Setup Node.js Cache 🗂
+        uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      
+      - name: Ruby Dependencies 🏗
+        run: |
+          echo 'gem: --no-document' >> ~/.gemrc
+          gem install bundler
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+      
+      - name: Node Dependencies 🏗
+        run: yarn
+
+      - name: Database Setup 🗄
+        run: |
+          bundle exec rails db:test:prepare
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+      
+      - name: Build frontend assets 🎨
+        run: ./bin/webpack
+        env:
+          RAILS_ENV: development
+          NODE_ENV: development
+
+      - name: Cypress Test 🧪
+        uses: cypress-io/github-action@v2
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          CYPRESS_BASE_URL: http://localhost:5017
+          RAILS_ENV: test
+        with:
+          project: ./spec
+          start: bundle exec rails server --port 5017
+          wait-on: http://localhost:5017
+          browser: chrome
+
+      - name: Failure screenshots 🖼
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: spec/cypress/screenshots
+      
+        
