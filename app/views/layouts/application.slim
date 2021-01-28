@@ -8,8 +8,8 @@ html.govuk-template lang="en"
   body.govuk-template__body
     = render "layouts/shared/header"
     = render "layouts/shared/phase_banner"
-    
-    = render "layouts/shared/navigation"
+    - if @current_user
+      = render "layouts/shared/navigation"
 
     .govuk-width-container
 

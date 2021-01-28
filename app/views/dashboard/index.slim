@@ -1,1 +1,7 @@
-p= "Dashboard page"
+- if @current_user.admin?
+  p You're an Admin
+- else 
+  p 
+    | You're
+    u<> not
+    | an Admin
