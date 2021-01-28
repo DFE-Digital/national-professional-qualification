@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include HTTPAuth
+  include ::HTTPAuth
   helper_method :current_user
 
   private
