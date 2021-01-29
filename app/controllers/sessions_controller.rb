@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  include HTTPAuth
   before_action :go_to_dashboard_if_authenticated!, except: [:destroy]
 
   def new
@@ -15,7 +16,6 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    puts "SIGNING OUT"
     session.delete(:user_id)
     @current_user = nil
     redirect_to sign_in_path
