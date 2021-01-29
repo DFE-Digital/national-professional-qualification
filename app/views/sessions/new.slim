@@ -1,0 +1,20 @@
+h1.govuk-heading-l
+  | Who would you like to sign-in as?
+
+p This page is a dummy placeholder to allow prototyping role switching between DfE Administrators and Supplier Members. 
+
+hr
+.govuk-grid-column-one-half
+  h3.govuk-heading-m DfE Administrator
+  p Sign-in as a DfE administrator to approve course products and authorise payments
+  = form_tag(create_session_path, method: :post) do |f|
+    = hidden_field_tag :role, :admin
+    = submit_tag "Sign-in as DfE Admin", class: %w[govuk-button govuk-button--start], "data-module" => "govuk-button"
+.govuk-grid-column-one-half
+  h3.govuk-heading-m Supplier Member
+  p Sign in as a Supplier to create and moderate course products
+  = form_tag(create_session_path, method: :post) do |f|
+    = hidden_field_tag :role, :supplier
+    = submit_tag "Sign-in as Supplier Member", class: %w[govuk-button govuk-button--start], "data-module" => "govuk-button"
+
+.govuk-clearfix
