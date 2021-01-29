@@ -13,5 +13,5 @@ $app-light-grey: #f8f8f8;
 $app-code-color: #d13118;
 
 @import "~govuk-frontend/govuk/all";
-@import "defaults";
-@import "navigation";
+@import "stylesheets/defaults";
+@import "stylesheets/navigation";

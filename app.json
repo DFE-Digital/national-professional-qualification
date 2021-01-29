@@ -13,6 +13,12 @@
     "RAILS_ENV": {
       "required": false
     },
+    "RAILS_LOG_TO_STDOUT": {
+      "required": true
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "required": true
+    },
     "HTTP_AUTH_USER": {
       "required": false
     },
@@ -30,10 +36,10 @@
   ],
   "buildpacks": [
     {
-      "url": "heroku/ruby"
+      "url": "heroku/nodejs"
     },
     {
-      "url": "heroku/nodejs"
+      "url": "heroku/ruby"
     }
   ]
 }
