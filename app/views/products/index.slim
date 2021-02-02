@@ -5,12 +5,20 @@ table.govuk-table
     tr.govuk-table__row
       th.govuk-table__header[scope="col"] Product Name
       th.govuk-table__header[scope="col"] Date
+      th.govuk-table__header.govuk-table__header--numeric[scope="col"] Availability / Quantity
+      th.govuk-table__header.govuk-table__header--numeric[scope="col"] Total Value
       th.govuk-table__header.govuk-table__header--numeric[scope="col"] Actions
   tbody.govuk-table__body
     - @records.each do |record|
       tr.govuk-table__row
         th.govuk-table__header[scope="row"]= record.name
         td.govuk-table__cell=l record.start_at
+        td.govuk-table__cell.govuk-table__cell--numeric
+          = record.availability
+          | /
+          = record.quantity
+        td.govuk-table__cell.govuk-table__cell--numeric
+          = humanized_money_with_symbol record.total_value
         td.govuk-table__cell.govuk-table__cell--numeric
           = link_to "View", product_path(record), class: %w[govuk-link]
 

@@ -1,0 +1,11 @@
+h1.govuk-heading-l Check the details before saving
+h2.govuk-heading-m Supplier
+
+dl.govuk-summary-list
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key Supplier Name
+    dd.govuk-summary-list__value= @record.name
+
+= form_for @record do |f|
+  = f.hidden_field :name
+  = f.govuk_submit "Accept and send"

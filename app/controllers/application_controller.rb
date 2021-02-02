@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
-  helper_method :current_user
+  helper_method :current_user, :admin_user?
 
   private
 
@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
     return if current_user
 
     redirect_to sign_in_path, flash: {error: "You are not authenticated"}
+  end
+
+  def admin_user?
+    current_user.admin?
   end
 
   def go_to_dashboard_if_authenticated!

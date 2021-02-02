@@ -12,13 +12,13 @@ class ProductsController < ApplicationController
 
   def new
     @supplier = Supplier.first # TODO bind me to the current_user
-    @record = @supplier.products.build()
+    @record = @supplier.products.build
   end
 
   def create
     @supplier = Supplier.first # TODO bind me to the current_user
     @record = @supplier.products.build(record_params)
-    if !params[:preview_before_save]# && @record.valid?
+    unless params[:preview_before_save] # && @record.valid?
       if @record.save!
         redirect_to product_path(@record)
       end

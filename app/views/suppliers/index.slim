@@ -1,0 +1,15 @@
+table.govuk-table
+  caption.govuk-table__caption
+    | Suppliers
+  thead.govuk-table__head
+    tr.govuk-table__row
+      th.govuk-table__header[scope="col"] Supplier Name
+      th.govuk-table__header.govuk-table__header--numeric[scope="col"] Actions
+  tbody.govuk-table__body
+    - @records.each do |record|
+      tr.govuk-table__row
+        th.govuk-table__header[scope="row"]= record.name
+        td.govuk-table__cell.govuk-table__cell--numeric
+          = link_to "View", supplier_path(record), class: %w[govuk-link]
+
+= link_to "Add another supplier", new_supplier_path, class: %w[govuk-button govuk-button--secondary]

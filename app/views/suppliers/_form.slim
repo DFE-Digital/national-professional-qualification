@@ -1,0 +1,9 @@
+= form_for @record do |f|
+  - if locals[:preview_before_save]
+    = hidden_field_tag :preview_before_save, true
+  = f.govuk_text_field :name,
+    label: { text: "Supplier Name", tag: "h3", size: "m" }
+  = f.govuk_text_field :unique_reference_number,
+    label: { text: "Unique reference number URN", tag: "h3", size: "m" }
+
+  = f.govuk_submit
