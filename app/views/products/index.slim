@@ -1,2 +1,17 @@
-div
-  | hello world
+table.govuk-table
+  caption.govuk-table__caption
+    | Course Products
+  thead.govuk-table__head
+    tr.govuk-table__row
+      th.govuk-table__header[scope="col"] Product Name
+      th.govuk-table__header[scope="col"] Date
+      th.govuk-table__header.govuk-table__header--numeric[scope="col"] Actions
+  tbody.govuk-table__body
+    - @records.each do |record|
+      tr.govuk-table__row
+        th.govuk-table__header[scope="row"]= record.name
+        td.govuk-table__cell=l record.start_at
+        td.govuk-table__cell.govuk-table__cell--numeric
+          = link_to "View", product_path(record), class: %w[govuk-link]
+
+= link_to "Add another course product", new_product_path, class: %w[govuk-button govuk-button--secondary]

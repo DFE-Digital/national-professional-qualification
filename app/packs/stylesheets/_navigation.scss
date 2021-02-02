@@ -21,7 +21,6 @@ $navigation-height: 50px;
 
 .app-navigation__list {
   position: relative;
-  left: -(govuk-spacing(3));
   margin: 0;
   padding: 0;
   list-style: none;
@@ -37,8 +36,13 @@ $navigation-height: 50px;
   line-height: $navigation-height;
 }
 
+.app-navigation__list-item:first-child {
+  margin-left: -(govuk-spacing(3));
+}
+
 .app-navigation__list-item--right {
   float: right;
+  margin-right: -(govuk-spacing(3));
 }
 
 .app-navigation__list-item--current {

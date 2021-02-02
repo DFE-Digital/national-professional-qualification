@@ -1,0 +1,26 @@
+h1.govuk-heading-l Check your submission before sending for approval
+h2.govuk-heading-m Course Product
+dl.govuk-summary-list
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key Product Name
+    dd.govuk-summary-list__value= @record.name
+
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key Start date
+    dd.govuk-summary-list__value=l @record.start_at
+
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key Quantity
+    dd.govuk-summary-list__value= @record.quantity
+  
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key Price per unit
+    dd.govuk-summary-list__value
+      = humanized_money_with_symbol @record.price
+
+= form_for @record do |f|
+  = f.hidden_field :name
+  = f.hidden_field :start_at
+  = f.hidden_field :quantity
+  = f.hidden_field :price_pence
+  = f.govuk_submit "Accept and send"

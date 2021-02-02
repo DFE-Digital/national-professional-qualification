@@ -35,5 +35,6 @@ module NationalProfessionalQualification
     # Don't generate system test files.
     config.generators.system_tests = nil
     config.x.feedback_email = "NPQ-research@digital.education.gov.uk"
+    config.i18n.default_locale = :'en-GB'
   end
 end

@@ -1,0 +1,20 @@
+= form_for @record do |f|
+  - if locals[:preview_before_save]
+    = hidden_field_tag :preview_before_save, true
+  = f.govuk_text_field :name,
+    label: { text: "Product Name", tag: "h3", size: "m" },
+    hint: { text: "A name to help identify this course product contract" }
+  = f.govuk_date_field :start_at,
+    legend: { text: "When does the course product contract start?" },
+    hint: { text: "For example, 31 8 2021" }
+  = f.govuk_number_field :quantity,
+    label: { text: "Quantity", tag: "h3", size: "m" },
+    legend: { text: "How many course will you provide?" },
+    hint: { text: "For example, 100.  All cohorts combined" }
+  = f.govuk_number_field :price_pence,
+    label: { text: "Unit price", tag: "h3", size: "m" },
+    legend: { text: "How much does the course cost?" },
+    suffix_text: "pence",
+    step: 1,
+    hint: { text: "Value in pence. For example, 100000 pence per student" }
+  = f.govuk_submit

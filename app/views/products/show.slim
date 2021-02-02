@@ -1,2 +1,11 @@
+strong.govuk-tag.govuk-tag--grey pending
+p(
+  class="govuk-!-margin-top-2"
+)
+  =l @record.start_at
+h1.govuk-heading-l
+  span
+    = @record.name
+
 p= "product: #{@record.inspect}"
 p= "product: #{@record.supplier.inspect}"

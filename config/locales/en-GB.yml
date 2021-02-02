@@ -29,6 +29,34 @@
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
-en:
+en-GB:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "Validation failed: %{errors}"
+  number:
+    currency:
+      format:
+        unit: "£"
+  date:
+    month_names:
+    - 
+    - January
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+    formats:
+      default: "%d %B %Y"
+  time:
+    formats:
+      default: "%d %B %Y %l:%M%P"
   site:
     title: "National Professional Qualification"
