@@ -1,12 +1,18 @@
 class ApplicationController < ActionController::Base
   default_form_builder GOVUKDesignSystemFormBuilder::FormBuilder
 
-  helper_method :current_user, :admin_user?
+  helper_method :current_user, :current_supplier, :admin_user?
 
   private
 
   def current_user
     @current_user ||= User.find_by(id: session[:user_id])
+  end
+
+  def current_supplier
+    if current_user
+      @current_supplier ||= current_user.suppliers.last
+    end
   end
 
   def require_user!

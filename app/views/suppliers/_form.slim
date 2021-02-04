@@ -1,3 +1,4 @@
+= @record.supplier_members.first.user.inspect
 = form_for @record do |f|
   - if locals[:preview_before_save]
     = hidden_field_tag :preview_before_save, true
@@ -5,5 +6,10 @@
     label: { text: "Supplier Name", tag: "h3", size: "m" }
   = f.govuk_text_field :unique_reference_number,
     label: { text: "Unique reference number URN", tag: "h3", size: "m" }
-
+  = f.fields_for :supplier_members do |m|
+    = m.fields_for :user do |u|
+      = u.govuk_text_field :email,
+        label: { text: "Primary Email", tag: "h3", size: "m" },
+        hint: { text: "The email address of the primary person to maintain this supplier account" }
+  
   = f.govuk_submit

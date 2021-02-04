@@ -9,7 +9,10 @@ class SuppliersController < ApplicationController
   end
 
   def new
-    @record = Supplier.new
+    @record = Supplier.new(record_params)
+    if @record.supplier_members.size.zero?
+      @record.supplier_members.build.build_user(role: "supplier")
+    end
   end
 
   def create
@@ -24,6 +27,12 @@ class SuppliersController < ApplicationController
   private
 
   def record_params
-    params.require(:supplier).permit(:name)
+    params.fetch(:supplier, {}).permit(
+      :name,
+      :unique_reference_number,
+      supplier_members_attributes: [
+        user_attributes: [:email]
+      ]
+    )
   end
 end

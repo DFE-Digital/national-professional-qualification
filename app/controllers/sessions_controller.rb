@@ -28,6 +28,11 @@ class SessionsController < ApplicationController
   end
 
   def find_or_create_supplier_member
-    User.create_with({}).find_or_create_by(role: "supplier")
+    user = User.create_with({}).find_or_create_by(role: "supplier")
+    if user.suppliers.empty?
+      supplier = Supplier.create!(name: "My Supplier")
+      user.supplier_members.create(supplier: supplier)
+    end
+    user
   end
 end

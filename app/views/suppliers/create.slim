@@ -1,3 +1,5 @@
+- params = {supplier: controller.params[:supplier].to_unsafe_h}
+
 h1.govuk-heading-l Check the details before saving
 h2.govuk-heading-m Supplier
 
@@ -5,7 +7,33 @@ dl.govuk-summary-list
   .govuk-summary-list__row
     dt.govuk-summary-list__key Supplier Name
     dd.govuk-summary-list__value= @record.name
+    dd.govuk-summary-list__actions
+      = link_to new_supplier_path(params) do
+        | Change
+        span.govuk-visually-hidden supplier name
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key URN
+    dd.govuk-summary-list__value= @record.unique_reference_number
+    dd.govuk-summary-list__actions
+      = link_to new_supplier_path(params) do
+        | Change
+        span.govuk-visually-hidden urn
+  - @record.supplier_members.each_with_index do |member, index|
+    .govuk-summary-list__row
+      - if index.zero?
+        dt.govuk-summary-list__key Primary Email
+      - else
+        dt.govuk-summary-list__key Other Email
+      dd.govuk-summary-list__value= member.user.email
+      dd.govuk-summary-list__actions
+        = link_to new_supplier_path(params) do
+          | Change
+          span.govuk-visually-hidden email
 
 = form_for @record do |f|
   = f.hidden_field :name
+  = f.hidden_field :unique_reference_number
+  = f.fields_for :supplier_members do |m|
+    = m.fields_for :user do |u|
+      = u.hidden_field :email
   = f.govuk_submit "Accept and send"

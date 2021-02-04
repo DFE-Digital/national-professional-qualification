@@ -15,4 +15,8 @@ class Product < ApplicationRecord
   def update_availability
     update_column(:availability, quantity)
   end
+
+  def active?
+    approved_at.present?
+  end
 end

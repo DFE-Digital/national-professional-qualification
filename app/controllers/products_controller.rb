@@ -1,27 +1,29 @@
 class ProductsController < ApplicationController
   before_action :require_user!
-  before_action :record, except: [:index, :new, :create]
+  before_action :record, except: %i[index new create]
 
   def index
-    @supplier = Supplier.first # TODO bind me to the current_user
-    @records = @supplier.products
+    if current_user.admin?
+      @records = Product.all
+    else
+      @supplier = current_supplier
+      @records = @supplier.products
+    end
   end
 
   def show
   end
 
   def new
-    @supplier = Supplier.first # TODO bind me to the current_user
-    @record = @supplier.products.build
+    @supplier = current_supplier
+    @record = @supplier.products.build(record_params)
   end
 
   def create
-    @supplier = Supplier.first # TODO bind me to the current_user
-    @record = @supplier.products.build(record_params)
+    @supplier = current_supplier
+    @record = @supplier.products.build({start_at: Date.today}.merge(record_params))
     unless params[:preview_before_save] # && @record.valid?
-      if @record.save!
-        redirect_to product_path(@record)
-      end
+      redirect_to product_path(@record) if @record.save!
     end
     @record
   end
@@ -39,6 +41,6 @@ class ProductsController < ApplicationController
   end
 
   def record_params
-    params.require(:product).permit(:name, :start_at, :price_pence, :quantity)
+    params.fetch(:product, {}).permit(:name, :start_at, :price_pence, :quantity)
   end
 end
