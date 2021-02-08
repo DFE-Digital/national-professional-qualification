@@ -5,14 +5,14 @@ h1.govuk-heading-l
 
 p
   | The total value of this product is 
-  strong=<>humanized_money_with_symbol @record.total_value
+  strong>= humanized_money_with_symbol @record.total_value
   | with 
-  strong=<> number_with_delimiter @record.quantity
+  strong>= number_with_delimiter @record.quantity
   | course positions being offered.
 
 p
   | Each course position is being offered at 
-  strong=<humanized_money_with_symbol @record.price
+  strong= humanized_money_with_symbol @record.price
   |.
 
 p

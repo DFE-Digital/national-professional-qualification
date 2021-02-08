@@ -33,6 +33,13 @@ Cypress.Commands.add('appFactories', function (options) {
 Cypress.Commands.add('appFixtures', function (options) {
   cy.app('activerecord_fixtures', options)
 });
+
+Cypress.Commands.add('forceLogin', (options) =>{
+  cy.visit('__cypress__/force_login', {
+    method: "POST",
+    body: options
+  })
+})
 // CypressOnRails: end
 
 // The next is optional
