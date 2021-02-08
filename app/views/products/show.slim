@@ -1,11 +1,49 @@
-strong.govuk-tag.govuk-tag--grey pending
-p(
-  class="govuk-!-margin-top-2"
-)
-  =l @record.start_at
+strong.govuk-tag.govuk-tag--grey= @record.status
 h1.govuk-heading-l
   span
     = @record.name
 
-p= "product: #{@record.inspect}"
-p= "product: #{@record.supplier.inspect}"
+p
+  | The total value of this product is 
+  strong=<>humanized_money_with_symbol @record.total_value
+  | with 
+  strong=<> number_with_delimiter @record.quantity
+  | course positions being offered.
+
+p
+  | Each course position is being offered at 
+  strong=<humanized_money_with_symbol @record.price
+  |.
+
+p
+  | There will be
+  strong=<> Product::FIXED_PAYMENTS_MONTHS
+  | guarenteed payments, totalling
+  strong=< humanized_money_with_symbol @record.fixed_payment_total
+  |.
+
+p
+  | The course product is scheduled to start 
+  =<> l @record.start_at
+
+- if @current_user.admin? && !@record.active?
+  = form_for @record do |f|
+    = f.govuk_submit "Approve Product"
+
+table.govuk-table
+  caption.govuk-table__caption
+    | Statements
+  thead.govuk-table__head
+    tr.govuk-table__row
+      th.govuk-table__header[scope="col"] Date
+      th.govuk-table__header[scope="col"] Reason
+      th.govuk-table__header.govuk-table__header--numeric[scope="col"] Amount
+  tbody.govuk-table__body
+    - @record.statements.each do |statement|
+      tr.govuk-table__row
+        td.govuk-table__cell
+          =l statement.scheduled_at
+        td.govuk-table__cell
+          = statement.reason
+        td.govuk-table__cell.govuk-table__cell--numeric
+          =humanized_money_with_symbol statement.amount

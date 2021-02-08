@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_02_104039) do
+ActiveRecord::Schema.define(version: 2021_02_08_113056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,17 @@ ActiveRecord::Schema.define(version: 2021_02_02_104039) do
     t.index ["supplier_id"], name: "index_products_on_supplier_id"
   end
 
+  create_table "statements", force: :cascade do |t|
+    t.integer "amount_pence", default: 0, null: false
+    t.string "amount_currency", default: "GBP", null: false
+    t.date "scheduled_at"
+    t.string "reason"
+    t.bigint "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_statements_on_product_id"
+  end
+
   create_table "supplier_members", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "supplier_id"
@@ -72,6 +83,7 @@ ActiveRecord::Schema.define(version: 2021_02_02_104039) do
   add_foreign_key "product_items", "products"
   add_foreign_key "products", "suppliers"
   add_foreign_key "products", "users", column: "approved_by_id"
+  add_foreign_key "statements", "products"
   add_foreign_key "supplier_members", "suppliers"
   add_foreign_key "supplier_members", "users"
 end

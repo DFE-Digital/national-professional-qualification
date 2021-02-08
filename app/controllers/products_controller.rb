@@ -29,6 +29,11 @@ class ProductsController < ApplicationController
   end
 
   def update
+    @record.update({
+      approved_at: Date.today,
+      approved_by_id: @current_user.id
+    })
+    redirect_to product_path(@record)
   end
 
   def destroy
