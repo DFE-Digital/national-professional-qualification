@@ -44,14 +44,13 @@ class Product < ApplicationRecord
     ActiveRecord::Base.transaction do
       amount_calculated = Money.new(0, :gbp)
       (FIXED_PAYMENTS_MONTHS - 1).times do |n|
-        amount_calculated = amount_calculated + monthly_portion
-        statements.create(amount: monthly_portion, reason: "Fixed Payment #{n+1} - #{name}", scheduled_at: start_at + n.months)
+        amount_calculated += monthly_portion
+        statements.create(amount: monthly_portion, reason: "Fixed Payment #{n + 1} - #{name}", scheduled_at: start_at + n.months)
       end
       remaining_amount = fixed_payment_total - amount_calculated
       statements.create(amount: remaining_amount, reason: "Fixed Payment Final - #{name}", scheduled_at: start_at + FIXED_PAYMENTS_MONTHS.months)
-      amount_calculated = amount_calculated + remaining_amount
+      amount_calculated += remaining_amount
       raise CalculationError if fixed_payment_total != amount_calculated
     end
-
   end
 end
