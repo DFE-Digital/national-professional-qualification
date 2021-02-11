@@ -1,0 +1,21 @@
+
+- params = { order: controller.params[:order].to_unsafe_h }
+
+h1.govuk-heading-l Check your enrollment before committing 
+dl.govuk-summary-list
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key Product Name 
+    dd.govuk-summary-list__value= @record.product.name
+    dd.govuk-summary-list__actions
+  
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key Teacher reference number 
+    dd.govuk-summary-list__value= @record.teacher_reference_number
+    dd.govuk-summary-list__actions
+      = link_to new_product_order_path(params) do
+        | Change
+        span.govuk-visually-hidden TRN
+
+= form_for [@product, @record] do |f|
+  = f.hidden_field :teacher_reference_number
+  = f.govuk_submit "Accept and enroll"

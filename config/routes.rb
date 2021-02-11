@@ -5,7 +5,12 @@ Rails.application.routes.draw do
       post "force_login", action: "force_login"
     end
   end
-  resources :products
+  resources :products do
+    resources :orders
+    patch :start_programme
+    patch :mid_way
+    patch :complete_programme
+  end
   resources :suppliers
   get "/sign-in", to: "sessions#new", as: :sign_in
   post "/sign-in", to: "sessions#create", as: :create_session

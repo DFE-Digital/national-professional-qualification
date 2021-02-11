@@ -1,0 +1,6 @@
+= form_for [@product, @record] do |f|
+  - if locals[:preview_before_save]
+    = hidden_field_tag :preview_before_save, true
+  = f.govuk_text_field :teacher_reference_number,
+    label: { text: "Teacher Reference Number" , tag: "h3", size: "m" }
+  = f.govuk_submit

@@ -29,10 +29,22 @@ class ProductsController < ApplicationController
   end
 
   def update
-    @record.update({
-      approved_at: Date.today,
-      approved_by_id: @current_user.id
-    })
+    @record.approve! if @record.may_approve?
+    redirect_to product_path(@record)
+  end
+
+  def start_programme
+    @record.start! if @record.may_start?
+    redirect_to product_path(@record)
+  end
+
+  def mid_way
+    @record.mid_way! if @record.may_mid_way?
+    redirect_to product_path(@record)
+  end
+
+  def complete_programme
+    @record.complete! if @record.may_complete?
     redirect_to product_path(@record)
   end
 
@@ -42,7 +54,7 @@ class ProductsController < ApplicationController
   private
 
   def record
-    @record ||= Product.find_by(id: params[:id])
+    @record ||= Product.find_by(id: params[:id] || params[:product_id])
   end
 
   def record_params

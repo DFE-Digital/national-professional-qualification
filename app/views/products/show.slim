@@ -1,7 +1,10 @@
-strong.govuk-tag.govuk-tag--grey= @record.status
+strong.govuk-tag.govuk-tag--grey= @record.state
 h1.govuk-heading-l
   span
     = @record.name
+
+ul
+  li= link_to :orders, product_orders_path(@record)
 
 p
   | The total value of this product is 
@@ -26,9 +29,22 @@ p
   | The course product is scheduled to start 
   =<> l @record.start_at
 
-- if @current_user.admin? && !@record.active?
+- if @current_user.admin? && @record.pending?
   = form_for @record do |f|
     = f.govuk_submit "Approve Product"
+
+- unless @current_user.admin?
+  - if @record.approved?
+    = form_for @record, url: product_start_programme_path(@record) do |f|
+      = f.govuk_submit "Start Programme"
+
+  - if @record.started?
+    = form_for @record, url: product_mid_way_path(@record) do |f|
+      = f.govuk_submit "Mid-way through Programme"
+
+  - if @record.mid_way?
+    = form_for @record, url: product_complete_programme_path(@record) do |f|
+      = f.govuk_submit "Complete Programme"
 
 table.govuk-table
   caption.govuk-table__caption

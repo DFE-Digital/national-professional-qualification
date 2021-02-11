@@ -1,0 +1,34 @@
+ul
+  li= link_to "New enrollment", new_product_order_path(@product)
+
+p 
+  | There are
+  strong<>= number_with_delimiter @product.availability
+  | out of
+  strong<>= number_with_delimiter @product.quantity
+  | course places remaining.
+
+p
+ | There is
+ strong<>= humanized_money_with_symbol @product.variable_payment_total
+ | available to claim should all students complete course. 
+
+table.govuk-table 
+  caption.govuk-table__caption 
+    | Enrollments
+  thead.govuk-table__head
+    tr.govuk-table__row
+      th.govuk-table__header[scope="col"] Status
+      th.govuk-table__header[scope="col"] TRN
+      th.govuk-table__header[scope="col"] Started at
+      th.govuk-table__header.govuk-table__header--numeric[scope="col"] Actions
+
+  tbody.govuk-table__body
+    - @records.each do |record|
+      tr.govuk-table__row
+        td.govuk-table__cell
+          strong.govuk-tag= record.state
+        td.govuk-table__cell= record.teacher_reference_number
+        td.govuk-table__cell= record.started_at
+        td.govuk-table__cell.govuk-table__cell--numeric
+          = link_to "View", product_order_path(@product, record)

@@ -15,4 +15,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   # inflect.acronym 'RESTful'
   inflect.acronym "HTTPAuth"
   inflect.acronym "HTTP"
+  inflect.acronym "AASM"
 end

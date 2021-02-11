@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_08_113056) do
+ActiveRecord::Schema.define(version: 2021_02_09_114413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,21 @@ ActiveRecord::Schema.define(version: 2021_02_08_113056) do
     "admin",
     "supplier",
   ], force: :cascade
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "product_id"
+    t.bigint "product_item_id"
+    t.string "teacher_reference_number"
+    t.string "state"
+    t.integer "price_pence", default: 0
+    t.integer "amount_paid_pence", default: 0
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_orders_on_product_id"
+    t.index ["product_item_id"], name: "index_orders_on_product_item_id"
+  end
 
   create_table "product_items", force: :cascade do |t|
     t.bigint "product_id", null: false
@@ -43,8 +58,16 @@ ActiveRecord::Schema.define(version: 2021_02_08_113056) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "price_pence", default: 0
     t.integer "total_value_pence", default: 0
+    t.string "state"
     t.index ["approved_by_id"], name: "index_products_on_approved_by_id"
     t.index ["supplier_id"], name: "index_products_on_supplier_id"
+  end
+
+  create_table "statement_orders", force: :cascade do |t|
+    t.bigint "statement_id"
+    t.bigint "order_id"
+    t.index ["order_id"], name: "index_statement_orders_on_order_id"
+    t.index ["statement_id"], name: "index_statement_orders_on_statement_id"
   end
 
   create_table "statements", force: :cascade do |t|
